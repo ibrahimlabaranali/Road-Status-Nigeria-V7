@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian Road Risk Reporting - Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .registration-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .header-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .required::after {
+            content: " *";
+            color: #dc3545;
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+        .file-upload input[type=file] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-upload-label {
+            display: block;
+            padding: 12px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .file-upload:hover .file-upload-label {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .progress {
+            height: 8px;
+            border-radius: 10px;
+        }
+        .verification-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="registration-container p-5">
+                    <!-- Header -->
+                    <div class="text-center mb-4">
+                        <i class="fas fa-road header-icon"></i>
+                        <h2 class="fw-bold text-dark mb-2">Nigerian Road Risk Reporting</h2>
+                        <p class="text-muted">Secure Registration Portal</p>
+                    </div>
+
+                    <!-- Alert Messages -->
+                    <div id="alertContainer"></div>
+
+                    <!-- Registration Form -->
+                    <form id="registrationForm" enctype="multipart/form-data">
+                        <!-- Personal Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="fw-bold text-primary mb-3">
+                                    <i class="fas fa-user me-2"></i>Personal Information
+                                </h5>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="fullName" class="form-label required">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" name="full_name" required>
+                                <div class="invalid-feedback">Please enter your full name.</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="phoneNumber" class="form-label required">Phone Number</label>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phone_number" 
+                                       placeholder="+2348012345678 or 08012345678" required>
+                                <div class="invalid-feedback">Please enter a valid Nigerian phone number.</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address (Optional)</label>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       placeholder="your.email@example.com">
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="role" class="form-label required">Role</label>
+                                <select class="form-select" id="role" name="role" required>
+                                    <option value="">Select your role</option>
+                                    <option value="Public">Public User</option>
+                                    <option value="Driver">Driver</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                                <div class="invalid-feedback">Please select your role.</div>
+                            </div>
+                        </div>
+
+                        <!-- Identity Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="fw-bold text-primary mb-3">
+                                    <i class="fas fa-id-card me-2"></i>Identity Information
+                                </h5>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="ninOrPassport" class="form-label required">NIN or Passport Number</label>
+                                <input type="text" class="form-control" id="ninOrPassport" name="nin_or_passport" 
+                                       placeholder="11-digit NIN or Passport number" required>
+                                <div class="invalid-feedback">Please enter a valid NIN (11 digits) or passport number.</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3" id="authorityNameGroup" style="display: none;">
+                                <label for="officialAuthorityName" class="form-label required">Official Authority Name</label>
+                                <input type="text" class="form-control" id="officialAuthorityName" 
+                                       name="official_authority_name" placeholder="Your official authority name">
+                                <div class="invalid-feedback">Official authority name is required for Admin role.</div>
+                            </div>
+                        </div>
+
+                        <!-- File Upload -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="fw-bold text-primary mb-3">
+                                    <i class="fas fa-upload me-2"></i>Identity Document Upload
+                                </h5>
+                            </div>
+                            
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Scanned ID Document (PDF, JPEG, PNG - Max 5MB)</label>
+                                <div class="file-upload">
+                                    <input type="file" id="idFile" name="id_file" accept=".pdf,.jpeg,.jpg,.png">
+                                    <label for="idFile" class="file-upload-label">
+                                        <i class="fas fa-cloud-upload-alt fa-2x text-muted mb-2"></i>
+                                        <div class="fw-bold">Choose a file or drag it here</div>
+                                        <small class="text-muted">Maximum file size: 5MB</small>
+                                    </label>
+                                </div>
+                                <div id="fileInfo" class="mt-2"></div>
+                            </div>
+                        </div>
+
+                        <!-- Security -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="fw-bold text-primary mb-3">
+                                    <i class="fas fa-shield-alt me-2"></i>Security
+                                </h5>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label required">Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback">Password must be at least 8 characters long.</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="confirmPassword" class="form-label required">Confirm Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="confirmPassword" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback">Passwords do not match.</div>
+                            </div>
+                        </div>
+
+                        <!-- Identity Verification -->
+                        <div class="verification-section">
+                            <h5 class="fw-bold text-primary mb-3">
+                                <i class="fas fa-check-circle me-2"></i>Identity Verification
+                            </h5>
+                            <p class="text-muted mb-3">Click the button below to verify your identity (simulated CAPTCHA/OTP)</p>
+                            <button type="button" class="btn btn-outline-primary" id="verifyIdentityBtn">
+                                <i class="fas fa-shield-check me-2"></i>Verify Identity
+                            </button>
+                            <div id="verificationStatus" class="mt-2"></div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn" disabled>
+                                <i class="fas fa-user-plus me-2"></i>Complete Registration
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Global variables
+        let isIdentityVerified = false;
+        let selectedFile = null;
+
+        // DOM elements
+        const form = document.getElementById('registrationForm');
+        const roleSelect = document.getElementById('role');
+        const authorityNameGroup = document.getElementById('authorityNameGroup');
+        const authorityNameInput = document.getElementById('officialAuthorityName');
+        const fileInput = document.getElementById('idFile');
+        const fileInfo = document.getElementById('fileInfo');
+        const verifyBtn = document.getElementById('verifyIdentityBtn');
+        const verificationStatus = document.getElementById('verificationStatus');
+        const submitBtn = document.getElementById('submitBtn');
+        const alertContainer = document.getElementById('alertContainer');
+
+        // Show alert function
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            alertContainer.appendChild(alertDiv);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Role change handler
+        roleSelect.addEventListener('change', function() {
+            if (this.value === 'Admin') {
+                authorityNameGroup.style.display = 'block';
+                authorityNameInput.required = true;
+            } else {
+                authorityNameGroup.style.display = 'none';
+                authorityNameInput.required = false;
+                authorityNameInput.value = '';
+            }
+        });
+
+        // File upload handler
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file type
+                const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    showAlert('Invalid file type. Please upload PDF, JPEG, or PNG files only.', 'danger');
+                    this.value = '';
+                    fileInfo.innerHTML = '';
+                    return;
+                }
+
+                // Validate file size (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showAlert('File size too large. Maximum size is 5MB.', 'danger');
+                    this.value = '';
+                    fileInfo.innerHTML = '';
+                    return;
+                }
+
+                selectedFile = file;
+                fileInfo.innerHTML = `
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        File selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)
+                    </div>
+                `;
+            }
+        });
+
+        // Password toggle handlers
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        });
+
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const icon = this.querySelector('i');
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                confirmPasswordInput.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        });
+
+        // Identity verification handler
+        verifyBtn.addEventListener('click', async function() {
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Verifying...';
+            
+            try {
+                const response = await fetch('/verify-identity', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    isIdentityVerified = true;
+                    verificationStatus.innerHTML = `
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>${result.message}
+                        </div>
+                    `;
+                    this.innerHTML = '<i class="fas fa-check me-2"></i>Verified';
+                    this.className = 'btn btn-success';
+                    checkFormValidity();
+                } else {
+                    throw new Error(result.message || 'Verification failed');
+                }
+            } catch (error) {
+                verificationStatus.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Verification failed: ${error.message}
+                    </div>
+                `;
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-shield-check me-2"></i>Verify Identity';
+            }
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            
+            // Required fields validation
+            const requiredFields = ['fullName', 'phoneNumber', 'role', 'ninOrPassport', 'password'];
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            // Email validation
+            const emailField = document.getElementById('email');
+            if (emailField.value && !isValidEmail(emailField.value)) {
+                emailField.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                emailField.classList.remove('is-invalid');
+            }
+
+            // Phone number validation
+            const phoneField = document.getElementById('phoneNumber');
+            if (!isValidNigerianPhone(phoneField.value)) {
+                phoneField.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                phoneField.classList.remove('is-invalid');
+            }
+
+            // NIN/Passport validation
+            const ninField = document.getElementById('ninOrPassport');
+            if (!isValidNINOrPassport(ninField.value)) {
+                ninField.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                ninField.classList.remove('is-invalid');
+            }
+
+            // Password validation
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('confirmPassword');
+            
+            if (passwordField.value.length < 8) {
+                passwordField.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                passwordField.classList.remove('is-invalid');
+            }
+
+            if (passwordField.value !== confirmPasswordField.value) {
+                confirmPasswordField.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                confirmPasswordField.classList.remove('is-invalid');
+            }
+
+            // Admin role validation
+            if (roleSelect.value === 'Admin' && !authorityNameInput.value.trim()) {
+                authorityNameInput.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                authorityNameInput.classList.remove('is-invalid');
+            }
+
+            return isValid && isIdentityVerified;
+        }
+
+        // Validation helper functions
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function isValidNigerianPhone(phone) {
+            const phoneRegex = /^(\+234|0)[789][01]\d{8}$/;
+            return phoneRegex.test(phone);
+        }
+
+        function isValidNINOrPassport(value) {
+            // NIN: 11 digits, Passport: 6-9 characters
+            return (value.length === 11 && /^\d{11}$/.test(value)) || 
+                   (value.length >= 6 && value.length <= 9);
+        }
+
+        function checkFormValidity() {
+            submitBtn.disabled = !validateForm();
+        }
+
+        // Real-time validation
+        form.addEventListener('input', checkFormValidity);
+        form.addEventListener('change', checkFormValidity);
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                showAlert('Please fix the validation errors before submitting.', 'danger');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Registering...';
+
+            try {
+                const formData = new FormData(form);
+                
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showAlert(result.message, 'success');
+                    form.reset();
+                    isIdentityVerified = false;
+                    verifyBtn.disabled = false;
+                    verifyBtn.innerHTML = '<i class="fas fa-shield-check me-2"></i>Verify Identity';
+                    verifyBtn.className = 'btn btn-outline-primary';
+                    verificationStatus.innerHTML = '';
+                    fileInfo.innerHTML = '';
+                    authorityNameGroup.style.display = 'none';
+                    submitBtn.disabled = true;
+                } else {
+                    throw new Error(result.detail || result.message || 'Registration failed');
+                }
+            } catch (error) {
+                showAlert(`Registration failed: ${error.message}`, 'danger');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-user-plus me-2"></i>Complete Registration';
+            }
+        });
+
+        // Initialize form
+        checkFormValidity();
+    </script>
+</body>
+</html> 
