@@ -1,331 +1,271 @@
-# Nigerian Road Risk Reporting App - Registration Module
+# 🚗 Nigerian Road Risk Reporting App
 
-A secure, modern registration system for the Nigerian Road Risk Reporting application. Built with Streamlit, SQLite, and optimized for Streamlit Cloud deployment.
+A comprehensive web application for reporting and managing road risks in Nigeria, featuring secure user authentication, registration, and administrative controls.
 
-## 🚀 Features
+## 🌟 Features
 
-### Core Registration Features
-- **Multi-role Registration**: Support for Admin, Driver, and Public users
+### 🔐 Authentication System
+- **Secure Login**: Email/phone + password authentication
+- **Forgot Password**: Complete password reset flow with secure tokens
+- **Session Management**: Persistent user sessions with role-based access
+- **Audit Logging**: Comprehensive logging of all user actions
+- **Password Security**: bcrypt hashing for secure password storage
+
+### 📝 User Registration
+- **Multi-role Support**: Admin, Driver, Public user types
 - **Identity Verification**: NIN (11 digits) or International Passport validation
-- **File Upload**: Secure document upload (PDF/JPEG/PNG) with 5MB limit
-- **Phone Validation**: Nigerian phone number format validation
-- **Email Validation**: Optional email with format validation
-- **Password Security**: bcrypt hashing with minimum 8-character requirement
+- **Document Upload**: Secure ID document storage (PDF/JPEG/PNG, max 5MB)
+- **Validation**: Comprehensive input validation and error handling
+- **Status Tracking**: Pending/verified account status management
 
-### Security Features
-- **Password Hashing**: Secure bcrypt implementation
-- **Input Validation**: Comprehensive client and server-side validation
-- **File Type Validation**: Restricted to secure document formats
-- **Unique Constraints**: Phone number, NIN/Passport, and email uniqueness
-- **Identity Verification**: Simulated CAPTCHA/OTP system
+### 👨‍💼 Admin Dashboard
+- **User Management**: View, verify, and manage all registered users
+- **Statistics**: Real-time user statistics and metrics
+- **Audit Logs**: Complete audit trail of system activities
+- **Data Export**: Download user data and logs in CSV format
+- **Role-based Access**: Admin-only features and controls
 
-### User Experience
-- **Modern UI**: Beautiful Streamlit interface with custom styling
-- **Real-time Validation**: Instant feedback on form inputs
-- **Progress Indicators**: Visual feedback during operations
-- **Error Handling**: Comprehensive error messages
-- **Mobile Responsive**: Optimized for all device sizes
-- **Admin Dashboard**: Complete user management interface
+### 🔒 Security Features
+- **Password Hashing**: bcrypt for secure password storage
+- **Input Validation**: Comprehensive validation for all user inputs
+- **Session Security**: Secure session management
+- **Audit Trail**: Complete logging of user actions and system events
+- **Token-based Reset**: Secure password reset with time-limited tokens
 
 ## 🛠 Tech Stack
 
-- **Frontend & Backend**: Streamlit (Python)
-- **Database**: SQLite with native Python sqlite3
-- **Security**: bcrypt for password hashing
-- **Data Processing**: Pandas for data manipulation
-- **File Handling**: Secure file upload with validation
-- **Validation**: Custom validation functions
+- **Frontend**: Streamlit (Python web framework)
+- **Backend**: Python with SQLite database
+- **Database**: SQLite with SQLAlchemy-style operations
+- **Authentication**: bcrypt for password hashing
+- **Security**: Built-in Python security modules (secrets, hashlib)
+- **Deployment**: Streamlit Cloud ready
 
-## 📋 Prerequisites
+## 📋 Database Schema
 
-- Python 3.8 or higher
-- pip (Python package installer)
+### Users Table
+- `id`: Primary key
+- `full_name`: User's full name
+- `phone_number`: Nigerian phone number (unique)
+- `email`: Email address (optional)
+- `role`: User role (Admin/Driver/Public)
+- `nin_or_passport`: NIN or Passport number (unique)
+- `official_authority_name`: Required for Admin role
+- `id_file_data`: Uploaded ID document (BLOB)
+- `id_file_name`: Original filename
+- `password_hash`: Hashed password
+- `registration_status`: Pending/Verified
+- `created_at`: Registration timestamp
+- `verified_at`: Verification timestamp
+- `last_login`: Last login timestamp
+
+### Logs Table (Audit Trail)
+- `id`: Primary key
+- `user_id`: Foreign key to users
+- `action`: Action performed (LOGIN_SUCCESS, LOGIN_FAILED, etc.)
+- `details`: Action details
+- `ip_address`: User's IP address
+- `timestamp`: Action timestamp
+
+### Reset Tokens Table
+- `id`: Primary key
+- `user_id`: Foreign key to users
+- `token`: Secure reset token
+- `expires_at`: Token expiration time
+- `used`: Token usage status
+- `created_at`: Token creation time
 
 ## 🚀 Installation & Setup
 
-### Local Development
+### Prerequisites
+- Python 3.8 or higher
+- pip package manager
 
-#### 1. Clone or Download the Project
-```bash
-# If using git
-git clone <repository-url>
-cd "Road Status Nigeria V7"
+### Local Installation
 
-# Or simply download and extract the files
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ibrahimlabaranali/Road-Status-Nigeria-V7.git
+   cd Road-Status-Nigeria-V7
+   ```
 
-#### 2. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+2. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-#### 3. Run the Application
-```bash
-streamlit run streamlit_app.py
-```
+3. **Run the application**
+   ```bash
+   streamlit run app.py
+   ```
 
-#### 4. Access the Application
-Open your browser and navigate to:
-```
-http://localhost:8501
-```
+4. **Access the application**
+   - Open your browser and go to `http://localhost:8501`
+   - The app will automatically create the database and tables
 
-### Streamlit Cloud Deployment
+## 🌐 Streamlit Cloud Deployment
 
-#### 1. Prepare Your Repository
-Ensure your repository contains:
-- `streamlit_app.py` (main application file)
-- `requirements.txt` (dependencies)
-- `.streamlit/config.toml` (configuration)
+### Prerequisites
+- GitHub account
+- Streamlit Cloud account (free at [share.streamlit.io](https://share.streamlit.io))
 
-#### 2. Deploy to Streamlit Cloud
-1. Go to [share.streamlit.io](https://share.streamlit.io)
-2. Sign in with your GitHub account
-3. Click "New app"
-4. Select your repository
-5. Set the main file path to: `streamlit_app.py`
-6. Click "Deploy"
+### Deployment Steps
 
-#### 3. Access Your Deployed App
-Your app will be available at:
-```
-https://your-app-name-your-username.streamlit.app
-```
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Add authentication system"
+   git push origin main
+   ```
 
-## 📁 Project Structure
+2. **Deploy to Streamlit Cloud**
+   - Visit [share.streamlit.io](https://share.streamlit.io)
+   - Sign in with GitHub
+   - Click "New app"
+   - Select repository: `ibrahimlabaranali/Road-Status-Nigeria-V7`
+   - Set main file: `app.py`
+   - Click "Deploy"
 
-```
-Road Status Nigeria V7/
-├── streamlit_app.py        # Main Streamlit application
-├── requirements.txt        # Python dependencies
-├── README.md              # This file
-├── .streamlit/
-│   └── config.toml        # Streamlit configuration
-├── app.py                 # FastAPI version (alternative)
-├── templates/             # HTML templates (for FastAPI version)
-├── static/               # CSS files (for FastAPI version)
-├── test_app.py           # Test script
-├── start_app.bat         # Windows startup script
-├── .gitignore           # Git ignore file
-└── users.db             # SQLite database (auto-created)
-```
+3. **Access Your App**
+   - Your app will be available at: `https://road-status-nigeria-v7-ibrahimlabaranali.streamlit.app`
 
-## 🎯 Usage Guide
+## 🔐 Authentication Flow
+
+### Login Process
+1. User enters email/phone and password
+2. System validates credentials against database
+3. If valid, user is logged in and redirected to dashboard
+4. If invalid, error message is shown and login attempt is logged
+5. Session is maintained for authenticated users
+
+### Password Reset Process
+1. User clicks "Forgot Password" on login page
+2. User enters email or phone number
+3. System generates secure reset token (valid for 1 hour)
+4. Token is displayed (in production, would be sent via email)
+5. User enters token and new password
+6. Password is updated and token is marked as used
 
 ### Registration Process
+1. User fills out registration form with all required fields
+2. System validates all inputs (phone, email, NIN/passport, etc.)
+3. Password is hashed using bcrypt
+4. User account is created with "pending" status
+5. Admin can verify user account from admin dashboard
 
-1. **Fill Personal Information**
-   - Full Name (required)
-   - Phone Number (Nigerian format: +2348012345678 or 08012345678)
-   - Email Address (optional)
-   - Role selection (Admin, Driver, or Public)
+## 👨‍💼 Admin Features
 
-2. **Provide Identity Information**
-   - NIN (11 digits) or Passport Number
-   - Official Authority Name (required for Admin role)
-
-3. **Upload Identity Document**
-   - Supported formats: PDF, JPEG, PNG
-   - Maximum size: 5MB
-   - Drag and drop or click to upload
-
-4. **Set Security Credentials**
-   - Password (minimum 8 characters)
-   - Confirm password
-
-5. **Verify Identity**
-   - Click "Verify Identity" button (simulated CAPTCHA/OTP)
-   - Complete the verification process
-
-6. **Submit Registration**
-   - Review all information
-   - Click "Complete Registration"
-
-### Admin Features
-
-#### Admin Dashboard
+### User Management
 - View all registered users
+- See user statistics (total, verified, pending, admin users)
+- Verify pending user accounts
 - Download user data as CSV
-- View registration statistics
-- Monitor pending verifications
 
-#### User Verification
-- Review pending user registrations
-- Verify user accounts
-- View user details
+### Audit Logs
+- View complete audit trail of system activities
+- See login attempts, registrations, password resets, etc.
+- Download logs as CSV for analysis
+- Track user actions with timestamps and IP addresses
 
-### Validation Rules
+### Security Monitoring
+- Monitor failed login attempts
+- Track password reset requests
+- View user verification activities
+- Monitor system usage patterns
 
-#### Phone Number
-- Must be Nigerian format: `+2348012345678` or `08012345678`
-- Must start with +234 or 0, followed by 7, 8, or 9, then 0 or 1, then 8 digits
-
-#### NIN/Passport
-- **NIN**: Exactly 11 digits
-- **Passport**: 6-9 characters
-
-#### Email (Optional)
-- Must be valid email format if provided
-- Must be unique if provided
-
-#### Password
-- Minimum 8 characters
-- Confirmed password must match
-
-#### File Upload
-- **Types**: PDF, JPEG, PNG only
-- **Size**: Maximum 5MB
-- **Required**: Yes
-
-## 🗄️ Database Schema
-
-### Users Table
-```sql
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    full_name TEXT NOT NULL,
-    phone_number TEXT UNIQUE NOT NULL,
-    email TEXT,
-    role TEXT NOT NULL,
-    nin_or_passport TEXT UNIQUE NOT NULL,
-    official_authority_name TEXT,
-    id_file_data BLOB,
-    id_file_name TEXT,
-    password_hash TEXT NOT NULL,
-    registration_status TEXT DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    verified_at TIMESTAMP
-);
-```
-
-## 🔒 Security Features
+## 🔒 Security Considerations
 
 ### Password Security
-- bcrypt hashing with salt
-- Minimum 8-character requirement
-- Secure password verification
+- All passwords are hashed using bcrypt
+- Password validation requires minimum 8 characters
+- Secure token generation for password reset
+- Time-limited reset tokens (1 hour expiration)
 
 ### Input Validation
-- Server-side validation with custom functions
-- Client-side validation with Streamlit
-- SQL injection prevention with parameterized queries
+- Nigerian phone number format validation
+- Email format validation
+- NIN (11 digits) or Passport number validation
+- File upload size and type restrictions
 
-### File Security
-- File type validation
-- File size limits
-- Secure file storage in database
+### Session Management
+- Secure session state management
+- Automatic logout functionality
+- Role-based access control
+- Audit logging of all actions
 
 ### Data Protection
-- Unique constraints on sensitive fields
-- Input sanitization
-- Error handling without data exposure
+- SQLite database with proper indexing
+- Secure file upload handling
+- Input sanitization and validation
+- Comprehensive error handling
 
-## 🚨 Error Handling
+## 📊 Usage Statistics
 
-The application provides comprehensive error handling:
+The application tracks various metrics:
+- Total registered users
+- Verified vs pending users
+- Admin user count
+- Login success/failure rates
+- User activity patterns
 
-- **Validation Errors**: Clear messages for invalid inputs
-- **File Upload Errors**: Size and type validation feedback
-- **Database Errors**: Unique constraint violations
-- **Network Errors**: Connection and timeout handling
+## 🐛 Troubleshooting
 
-## 🔧 Configuration
+### Common Issues
 
-### Streamlit Configuration (.streamlit/config.toml)
-```toml
-[theme]
-primaryColor = "#667eea"
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f0f2f6"
-textColor = "#262730"
-font = "sans serif"
-```
+1. **Database Connection Error**
+   - Ensure the app has write permissions in the directory
+   - Check if `users.db` file is not locked by another process
 
-### Environment Variables (Optional)
-Create a `.env` file for custom configuration:
-```env
-DATABASE_PATH=users.db
-MAX_FILE_SIZE=5242880
-```
+2. **Import Errors**
+   - Verify all dependencies are installed: `pip install -r requirements.txt`
+   - Check Python version compatibility (3.8+)
 
-## 🧪 Testing
+3. **Streamlit Cloud Deployment Issues**
+   - Ensure `requirements.txt` is in the root directory
+   - Check that `app.py` is the main file
+   - Verify all imports are compatible with Streamlit Cloud
 
-### Manual Testing
-1. Test all form validations
-2. Test file upload with different file types
-3. Test role-specific requirements
-4. Test identity verification flow
-5. Test error scenarios
-6. Test admin dashboard functionality
-
-### Automated Testing
-Run the test script:
+### Local Testing
 ```bash
-python test_app.py
+# Test the application locally
+streamlit run app.py
+
+# Check for any import errors
+python -c "import streamlit, pandas, bcrypt, sqlite3"
 ```
 
-## 🚀 Deployment
+## 🔄 Updates and Maintenance
 
-### Local Development
-```bash
-streamlit run streamlit_app.py --server.port 8501
-```
+### Adding New Features
+1. Update the main `app.py` file
+2. Test locally with `streamlit run app.py`
+3. Update `requirements.txt` if new dependencies are added
+4. Commit and push to GitHub
+5. Streamlit Cloud will automatically redeploy
 
-### Streamlit Cloud Deployment
-1. Push your code to GitHub
-2. Connect your repository to Streamlit Cloud
-3. Deploy with one click
-4. Your app is live and accessible worldwide
+### Database Migrations
+- The app automatically creates/updates database schema
+- New tables are added automatically when the app starts
+- Existing data is preserved during updates
 
-### Production Considerations
-- Database backups
-- SSL certificates (handled by Streamlit Cloud)
-- Rate limiting (consider implementing)
-- Monitoring and logging
+## 📞 Support
 
-## 🤝 Contributing
+For issues or questions:
+1. Check the troubleshooting section above
+2. Review the audit logs for error details
+3. Ensure all dependencies are properly installed
+4. Verify database permissions and connectivity
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+## 🎯 Future Enhancements
 
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support and questions:
-- Check the documentation above
-- Review error messages in the application
-- Test with different inputs
-- Verify all dependencies are installed
-
-## 🔄 Future Enhancements
-
-- [ ] Email verification system
-- [ ] SMS OTP verification
-- [ ] Advanced admin dashboard
-- [ ] User profile management
-- [ ] Password reset functionality
-- [ ] Audit logging
-- [ ] Rate limiting
-- [ ] Multi-language support
-- [ ] Dark mode theme
-- [ ] Advanced analytics
-
-## 🌟 Streamlit Cloud Benefits
-
-- **Zero Infrastructure**: No server setup required
-- **Automatic Scaling**: Handles traffic spikes automatically
-- **Global CDN**: Fast loading worldwide
-- **SSL Certificates**: Secure HTTPS by default
-- **Version Control**: Automatic deployments from Git
-- **Free Tier**: Generous free hosting
-- **Custom Domains**: Use your own domain name
+- Email integration for password reset
+- Two-factor authentication (2FA)
+- Advanced user roles and permissions
+- API endpoints for external integrations
+- Mobile app compatibility
+- Real-time notifications
+- Advanced reporting and analytics
 
 ---
 
-**Note**: This is a registration module for the Nigerian Road Risk Reporting app. The system is designed to be secure, scalable, and ready for integration with additional modules like login, dashboard, and reporting features. The Streamlit version is optimized for easy deployment and maintenance. 
+**Built with ❤️ for Nigerian Road Safety** 
